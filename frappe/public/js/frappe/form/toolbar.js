@@ -167,7 +167,7 @@ frappe.ui.form.Toolbar = Class.extend({
 				me.frm.savetrash();}, true);
 		}
 
-		if(frappe.user_roles.includes("System Manager")) {
+		if(frappe.user_roles.includes("System Manager") && me.frm.meta.issingle === 0) {
 			this.page.add_menu_item(__("Customize"), function() {
 				frappe.set_route("Form", "Customize Form", {
 					doc_type: me.frm.doctype
@@ -180,6 +180,21 @@ frappe.ui.form.Toolbar = Class.extend({
 					frappe.set_route('Form', 'DocType', me.frm.doctype);
 				}, true);
 			}
+		}
+
+		// Expand all sections
+		let section_fields = me.frm.meta.fields.filter((field) => field.fieldtype == "Section Break" && field.collapsible == 1);
+		if(section_fields.length != 0) {
+			this.page.add_menu_item(__("Expand Sections"), function () {
+				for (let section of section_fields) {
+					me.frm.get_field(section.fieldname).collapse(false);
+				}
+			}, true);
+			this.page.add_menu_item(__("Collapse Sections"), function () {
+				for (let section of section_fields) {
+					me.frm.get_field(section.fieldname).collapse(true);
+				}
+			}, true);
 		}
 
 		// feedback
