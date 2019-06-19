@@ -9,7 +9,7 @@ except ImportError: # for pip >= 10
     def parse_requirements(filename, **kwargs):
         """ load requirements from a pip requirements file """
         lineiter = (line.strip() for line in open(filename))
-        return [{ "req": line, "_link": false} for line in lineiter if line and not line.startswith("#")]
+        return [{ "req": line, "_link": False} for line in lineiter if line and not line.startswith("#")]
 
 import re, ast
 
