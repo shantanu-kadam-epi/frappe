@@ -5,7 +5,7 @@ from distutils.command.clean import clean as Clean
 from setuptools import setup, find_packages
 try: # for pip < 10
     from pip.req import parse_requirements
-except ImportError: # for pip >= 10
+except: # for pip >= 10
     from pip._internal.req import parse_requirements
 
 import re, ast
