@@ -6,10 +6,15 @@ from setuptools import setup, find_packages
 try: # for pip < 10
     from pip.req import parse_requirements
 except ImportError: # for pip >= 10
+    class ReqInfo:
+        def __init__(self, req):
+            self.req = req
+            self._link = False
+
     def parse_requirements(filename, **kwargs):
         """ load requirements from a pip requirements file """
         lineiter = (line.strip() for line in open(filename))
-        return [{ "req": line, "_link": False} for line in lineiter if line and not line.startswith("#")]
+        return [ReqInfo(line) for line in lineiter if line and not line.startswith("#")]
 
 import re, ast
 
