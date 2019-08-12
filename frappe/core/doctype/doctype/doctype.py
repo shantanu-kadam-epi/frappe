@@ -363,7 +363,7 @@ class DocType(Document):
 					os.path.join(new_path, fname.replace(frappe.scrub(old), frappe.scrub(new)))])
 
 		self.rename_inside_controller(new, old, new_path)
-		frappe.msgprint('Renamed files and replaced code in controllers, please check!')
+		frappe.msgprint(_('Renamed files and replaced code in controllers, please check!'))
 
 	def rename_inside_controller(self, new, old, new_path):
 		for fname in ('{}.js', '{}.py', '{}_list.js', '{}_calendar.js', 'test_{}.py', 'test_{}.js'):
@@ -715,7 +715,6 @@ def validate_fields(meta):
 	for d in fields:
 		if not d.permlevel: d.permlevel = 0
 		if d.fieldtype != "Table": d.allow_bulk_edit = 0
-		if d.fieldtype == "Barcode": d.ignore_xss_filter = 1
 		if not d.fieldname:
 			d.fieldname = d.fieldname.lower()
 

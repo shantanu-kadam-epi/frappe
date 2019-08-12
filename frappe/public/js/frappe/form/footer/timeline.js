@@ -28,12 +28,7 @@ frappe.ui.form.Timeline = class Timeline {
 			render_input: true,
 			only_input: true,
 			on_submit: (val) => {
-				// return new comment promise
-				if (strip_html(val)) {
-					return this.insert_comment("Comment", val, this.comment_area.button);
-				} else {
-					return Promise.resolve();
-				}
+				strip_html(val) && this.insert_comment("Comment", val, this.comment_area.button);
 			}
 		});
 
@@ -365,6 +360,7 @@ frappe.ui.form.Timeline = class Timeline {
 				c.content_html = frappe.markdown(__(c.content));
 			} else {
 				c.content_html = c.content;
+				c.content_html = frappe.utils.update_url_target(c.content_html);
 				c.content_html = frappe.utils.strip_whitespace(c.content_html);
 			}
 

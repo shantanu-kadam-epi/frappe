@@ -69,7 +69,7 @@ frappe.ui.form.PrintPreview = Class.extend({
 					frappe.urllib.get_full_url("/api/method/frappe.utils.print_format.download_pdf?"
 						+ "doctype=" + encodeURIComponent(me.frm.doc.doctype)
 						+ "&name=" + encodeURIComponent(me.frm.doc.name)
-						+ "&format=" + me.selected_format()
+						+ "&format=" + encodeURIComponent(me.selected_format())
 						+ "&no_letterhead=" + (me.with_letterhead() ? "0" : "1")
 						+ (me.lang_code ? ("&_lang=" + me.lang_code) : ""))
 				);
@@ -129,8 +129,8 @@ frappe.ui.form.PrintPreview = Class.extend({
 		this.preview();
 	},
 	set_default_print_language: function () {
- 		var print_format = this.get_print_format();
-		this.lang_code = print_format.default_print_language || frappe.boot.lang;
+		var print_format = this.get_print_format();
+		this.lang_code = print_format.default_print_language || this.frm.doc.language || frappe.boot.lang;
 		this.language_sel.val(this.lang_code);
  	},
 	multilingual_preview: function () {
@@ -213,7 +213,7 @@ frappe.ui.form.PrintPreview = Class.extend({
 			+ "doctype=" + encodeURIComponent(me.frm.doc.doctype)
 			+ "&name=" + encodeURIComponent(me.frm.doc.name)
 			+ (printit ? "&trigger_print=1" : "")
-			+ "&format=" + me.selected_format()
+			+ "&format=" + encodeURIComponent(me.selected_format())
 			+ "&no_letterhead=" + (me.with_letterhead() ? "0" : "1")
 			+ (me.lang_code ? ("&_lang=" + me.lang_code) : "")));
 		if (!w) {
@@ -230,7 +230,7 @@ frappe.ui.form.PrintPreview = Class.extend({
 				doc: this.frm.doc,
 				print_format: this.selected_format(),
 				no_letterhead: !this.with_letterhead() ? 1 : 0,
-				_lang: this.lang_code
+				_lang: this.lang_code,
 			},
 			callback: function (r) {
 				if (!r.exc) {
