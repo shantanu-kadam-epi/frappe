@@ -1,6 +1,6 @@
 {
     "branch": "bloomstack-production",
-    "repositoryUrl": "https://github.com/digithinkit/frappe/",
+    "repositoryUrl": "https://github.com/digithinkit/frappe",
     "plugins": [
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
