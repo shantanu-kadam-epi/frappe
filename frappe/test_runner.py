@@ -35,7 +35,7 @@ def main(app=None, module=None, doctype=None, verbose=False, tests=(),
 
 	xmloutput_fh = None
 	if junit_xml_output:
-		xmloutput_fh = open(junit_xml_output, 'w')
+		xmloutput_fh = open(junit_xml_output, 'wb')
 		unittest_runner = xmlrunner_wrapper(xmloutput_fh)
 	else:
 		unittest_runner = unittest.TextTestRunner
@@ -110,11 +110,13 @@ def run_all_tests(app=None, verbose=False, profile=False, ui_tests=False, failfa
 					_add_test(app, path, filename, verbose,
 						test_suite, ui_tests)
 
+	runner = unittest_runner(verbosity=1+(verbose and 1 or 0), failfast=failfast)
+
 	if profile:
 		pr = cProfile.Profile()
 		pr.enable()
 
-	out = unittest_runner(verbosity=1+(verbose and 1 or 0), failfast=failfast).run(test_suite)
+	out = runner.run(test_suite)
 
 	if profile:
 		pr.disable()
@@ -184,13 +186,15 @@ def _run_unittest(modules, verbose=False, tests=(), profile=False):
 		else:
 			test_suite.addTest(module_test_cases)
 
+	runner = unittest_runner(verbosity=1+(verbose and 1 or 0))
+
 	if profile:
 		pr = cProfile.Profile()
 		pr.enable()
 
 	frappe.flags.tests_verbose = verbose
 
-	out = unittest_runner(verbosity=1+(verbose and 1 or 0)).run(test_suite)
+	out = runner.run(test_suite)
 
 
 	if profile:
