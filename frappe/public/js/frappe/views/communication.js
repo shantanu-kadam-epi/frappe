@@ -130,6 +130,9 @@ frappe.views.CommunicationComposer = Class.extend({
 		this.dialog.set_value("recipients", this.recipients || '');
 		this.dialog.set_value("cc", this.cc || '');
 		this.dialog.set_value("bcc", this.bcc || '');
+		this.dialog.set_value("attach_document_print", this.attach_document_print || false);
+		this.dialog.set_value("send_me_a_copy", this.send_me_a_copy || false);
+		this.dialog.set_value("send_read_receipt", this.send_read_receipt || false);
 
 		if(this.dialog.fields_dict.sender) {
 			this.dialog.fields_dict.sender.set_value(this.sender || '');
