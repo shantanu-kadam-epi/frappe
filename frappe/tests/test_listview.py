@@ -14,7 +14,7 @@ class TestListView(unittest.TestCase):
 			frappe.delete_doc("List View Settings", "DocType")
 
 	def test_get_list_settings_without_settings(self):
-		self.assertIsNone(get_list_settings("DocType"), None)
+		self.assertEqual(get_list_settings("DocType"), {})
 
 	def test_get_list_settings_with_default_settings(self):
 		frappe.get_doc({"doctype": "List View Settings", "name": "DocType"}).insert()

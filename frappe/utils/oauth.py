@@ -46,13 +46,15 @@ def get_oauth_keys(provider):
 
 	if not keys:
 		# try database
-		client_id, client_secret = frappe.get_value("Social Login Key", provider, ["client_id", "client_secret"])
-		client_secret = get_decrypted_password("Social Login Key", provider, "client_secret")
-		keys = {
-			"client_id": client_id,
-			"client_secret": client_secret
-		}
-		return keys
+		if frappe.db.exists("Social Login Key", provider, ["client_id", "client_secret"]):
+			client_id, client_secret = frappe.get_value("Social Login Key", provider, ["client_id", "client_secret"])
+			client_secret = get_decrypted_password("Social Login Key", provider, "client_secret")
+			keys = {
+				"client_id": client_id,
+				"client_secret": client_secret
+			}
+			return keys
+		frappe.throw(_("No Social Login for Provider - {0}.").format(provider))
 	else:
 		return {
 			"client_id": keys["client_id"],
