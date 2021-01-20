@@ -82,9 +82,11 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 		if (!this.$input) {
 			return;
 		}
+		let doctype = this.get_options();
 		this.$input.val(__(link_display));
 		this.label = __(link_display);
 		this.data_value = value;
+		frappe.add_link_title(doctype, value, this.label);
 	},
 	parse_validate_and_set_in_model: function(value, label, e) {
 		if (this.parse) {
