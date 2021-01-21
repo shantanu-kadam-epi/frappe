@@ -12,10 +12,6 @@ def sendmail_to_system_managers(subject, content):
 def get_contact_list(txt, page_length=20):
 	"""Returns contacts (from autosuggest)"""
 
-	cached_contacts = get_cached_contacts(txt)
-	if cached_contacts:
-		return cached_contacts[:page_length]
-
 	try:
 		match_conditions = build_match_conditions('Contact')
 		match_conditions = "and {0}".format(match_conditions) if match_conditions else ""
@@ -34,8 +30,6 @@ def get_contact_list(txt, page_length=20):
 
 	except:
 		raise
-
-	update_contact_cache(out)
 
 	return out
 
@@ -81,23 +75,3 @@ def get_communication_doctype(doctype, txt, searchfield, start, page_len, filter
 		if txt.lower().replace("%", "") in dt.lower() and dt in can_read:
 			out.append([dt])
 	return out
-
-def get_cached_contacts(txt):
-	contacts = frappe.cache().hget("contacts", frappe.session.user) or []
-
-	if not contacts:
-		return
-
-	if not txt:
-		return contacts
-
-	match = [d for d in contacts if (d.value and ((d.value and txt in d.value) or (d.description and txt in d.description)))]
-	return match
-
-def update_contact_cache(contacts):
-	cached_contacts = frappe.cache().hget("contacts", frappe.session.user) or []
-
-	uncached_contacts = [d for d in contacts if d not in cached_contacts]
-	cached_contacts.extend(uncached_contacts)
-
-	frappe.cache().hset("contacts", frappe.session.user, cached_contacts)
