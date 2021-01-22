@@ -84,6 +84,7 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 		}
 		let doctype = this.get_options();
 		this.$input.val(__(link_display));
+		this.label = __(link_display);
 		this.data_value = value;
 		frappe.add_link_title(doctype, value, this.label);
 	},
