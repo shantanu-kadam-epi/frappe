@@ -546,12 +546,13 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 			});
 		} else {
 			me.reset_value();
+			me.set_fetch_values(df, docname, value);
 		}
 	},
-	set_fetch_values: function(df, docname, fetch_values) {
-		var fl = this.frm.fetch_dict[df.fieldname].fields;
-		for(var i=0; i < fl.length; i++) {
-			frappe.model.set_value(df.parent, docname, fl[i], fetch_values[i], df.fieldtype);
+	set_fetch_values: function (df, docname, fetch_values) {
+		let field_list = this.frm.fetch_dict[df.fieldname] && this.frm.fetch_dict[df.fieldname].fields;
+		for (let i in field_list) {
+			frappe.model.set_value(df.parent, docname, field_list[i], fetch_values ? fetch_values[i] : fetch_values, df.fieldtype);
 		}
 	}
 });
