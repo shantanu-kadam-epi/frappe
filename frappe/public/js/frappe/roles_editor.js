@@ -24,30 +24,29 @@ frappe.RoleEditor = Class.extend({
 		var me = this;
 		$(this.wrapper).empty();
 		let roles_section = $('<div class="roles-section row"></div>').appendTo($(this.wrapper));
-		if(me.frm.doctype != 'User') {
-			let role_toolbar = $('<p><button class="btn btn-default btn-add btn-sm" style="margin-right: 5px;"></button>\
-				<button class="btn btn-sm btn-default btn-remove"></button></p>').appendTo($(this.wrapper));
+		let role_toolbar = $('<p><button class="btn btn-default btn-add btn-sm" style="margin-right: 5px;"></button>\
+			<button class="btn btn-sm btn-default btn-remove"></button></p>').appendTo($(this.wrapper));
 
-			role_toolbar.find(".btn-add")
-				.html(__('Add all roles'))
-				.on("click", function() {
-					$(me.wrapper).find('input[type="checkbox"]').each(function(i, check) {
-						if (!$(check).is(":checked")) {
-							check.checked = true;
-						}
-					});
+		role_toolbar.find(".btn-add")
+			.html(__('Add all roles'))
+			.on("click", function() {
+				$(me.wrapper).find('input[type="checkbox"]').each(function(i, check) {
+					if (!$(check).is(":checked")) {
+						check.checked = true;
+					}
 				});
+			});
 
-			role_toolbar.find(".btn-remove")
-				.html(__('Clear all roles'))
-				.on("click", function() {
-					$(me.wrapper).find('input[type="checkbox"]').each(function(i, check) {
-						if($(check).is(":checked")) {
-							check.checked = false;
-						}
-					});
+		role_toolbar.find(".btn-remove")
+			.html(__('Clear all roles'))
+			.on("click", function() {
+				$(me.wrapper).find('input[type="checkbox"]').each(function(i, check) {
+					if($(check).is(":checked")) {
+						check.checked = false;
+					}
 				});
-		}
+			});
+
 
 		$.each(this.roles, function(i, role) {
 			$(roles_section).append(repl('<div class="user-role col-md-6" \
