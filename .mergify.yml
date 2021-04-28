@@ -4,8 +4,7 @@ pull_request_rules:
       - status-success=Sider
       - status-success=Semantic Pull Request
       - status-success=Travis CI - Pull Request
-      - status-success=security/snyk - package.json (frappe)
-      - status-success=security/snyk - requirements.txt (frappe)
+      - status-success=security/snyk (Bloomstack)
       - label!=Don't Merge
       - label!=squash
       - "#approved-reviews-by>=1"
@@ -16,8 +15,7 @@ pull_request_rules:
     conditions:
       - status-success=Sider
       - status-success=Travis CI - Pull Request
-      - status-success=security/snyk - package.json (frappe)
-      - status-success=security/snyk - requirements.txt (frappe)
+      - status-success=security/snyk (Bloomstack)
       - label!=Don't Merge
       - label=squash
       - "#approved-reviews-by>=1"
