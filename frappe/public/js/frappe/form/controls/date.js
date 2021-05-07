@@ -10,9 +10,11 @@ frappe.ui.form.ControlDate = frappe.ui.form.ControlData.extend({
 	set_formatted_input: function(value) {
 		this._super(value);
 		if (!this.datepicker) return;
-		if(!value) {
+		if (!value) {
 			this.datepicker.clear();
 			return;
+		} else if (value === "Today") {
+			value = this.get_now_date();
 		}
 
 		let should_refresh = this.last_value && this.last_value !== value;
@@ -32,10 +34,6 @@ frappe.ui.form.ControlDate = frappe.ui.form.ControlData.extend({
 		}
 
 		if(should_refresh) {
-			if(value == 'Today')
-			{
-				value = this.get_now_date();
-			}
 			this.datepicker.selectDate(frappe.datetime.str_to_obj(value));
 		}
 	},
