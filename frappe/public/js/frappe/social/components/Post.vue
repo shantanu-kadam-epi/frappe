@@ -24,7 +24,7 @@
 			<div class="text-muted" v-html="post_time"></div>
 			<div ref="content" class="content" v-html="post.content"></div>
 			<div class="edit-box flex-column" v-if="show_edit_post">
-			<div class="text-muted comment-label">{{ __('Update a post') }}</div>
+			<div class="text-muted comment-label">{{ __('Update') }}</div>
 			<div ref="edit-section"></div>
 			<div class="flex justify-between">
 				<button
@@ -176,12 +176,12 @@ export default {
 					'post_name': this.post.name
 				}).then((res) => this.make_edit_section(res))
 		},
-		make_edit_section(edit_post_data){
+		make_edit_section(edit_post_data) {
 			this.edit_post_section = frappe.ui.form.make_control({
 				parent: this.$refs['edit-section'],
 				only_input: true,
 				render_input: true,
-				value: edit_post_data[0].content,
+				value: edit_post_data.content,
 				no_wrapper: true,
 				df: {
 					fieldtype: 'Text Editor',
@@ -191,8 +191,7 @@ export default {
 				on_submit: this.update_post.bind(this)
 			});
 		},
-		update_post()
-		{
+		update_post() {
 			const message = this.edit_post_section.get_value().replace('<div><br></div>', '');
 			if (!strip_html(message)) return
 			frappe.utils.play_sound("click");
