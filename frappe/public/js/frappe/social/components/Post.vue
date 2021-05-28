@@ -173,8 +173,8 @@ export default {
 		edit_post() {
 			this.toggle_edit_section();
 			frappe.xcall('frappe.social.doctype.post.post.edit_post', {
-					'post_name': this.post.name
-				}).then((res) => this.make_edit_section(res))
+				'post_name': this.post.name
+			}).then((res) => this.make_edit_section(res))
 		},
 		make_edit_section(edit_post_data) {
 			this.edit_post_section = frappe.ui.form.make_control({
